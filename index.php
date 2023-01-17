@@ -12,6 +12,6 @@ use api\core\Request;
 $request = Request::get_request_info();
 
 $api = new Api($request);
-$response = $api->handle();
+$response = $api->hendle();
 
 $api->send($response);

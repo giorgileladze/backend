@@ -2,13 +2,15 @@
 
 namespace api\core;
 
-class Api {
+use api\core\coreIntefaces\ApiInteface;
+
+class Api implements ApiInteface {
 
     public function __construct(private array $request)
     {
         $this->hendle_preflight_request();
     }
-    public function handle () : array {
+    public function hendle () : array {
 
         $uri = $this->request["URI"];
         if(RegisteredRoutes::is_allowed_URI($uri)) {

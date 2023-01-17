@@ -2,7 +2,7 @@
 
 namespace api\DB_Connection;
 
-use api\src\products\model\Product;
+use api\products\model\Product;
 use Exception;
 use PDO;
 use PDOException;
@@ -56,13 +56,8 @@ class DataBaseConn {
             return [];
         }
     }
-
-//    private function check_sku (array $sku) : bool {
-//       $this->select()
-//    }
-
     public function delete_by_sku (array $array) : string {
-        $items_to_delete = "('" . implode("','", array_values($array)) . "')";
+        $items_to_delete = "'" . implode("','", array_values($array)) . "'";
         $sql = "
             DELETE FROM book WHERE SKU IN ($items_to_delete);
             DELETE FROM DVD WHERE SKU IN ($items_to_delete);
@@ -77,6 +72,10 @@ class DataBaseConn {
             http_response_code(500);
             return 0;
         }
+    }
+
+    public function check_sku(string $sku) : bool{
+        return true; // to change
     }
 
     public function close_conn () {

@@ -1,20 +1,18 @@
 <?php
 
-namespace api\src\products\productTypes;
+namespace api\products\productTypes;
 
-use api\src\products\model\Product;
+use api\products\model\Product;
 
-class DVD extends Product {
+class Book extends Product {
 
-    private int $size;
+    public const TABLE_NAME = "book";
 
-    public const TABLE_NAME = "DVD";
-
-    public function __construct(string $SKU, string $name, float $price, int $size)
+    private float $weight;
+    public function __construct(string $SKU, string $name, float $price, float $weight)
     {
         parent::__construct($SKU, $name, $price);
-
-        $this->size = $size;
+        $this->weight = $weight;
     }
 
     public function get_properties(): array
@@ -23,16 +21,15 @@ class DVD extends Product {
             "sku" => $this->SKU,
             "name" => $this->name,
             "price" => $this->price,
-            "size" => $this->size,
+            "weight" => $this->weight,
         ];
     }
 
     public function validate_product_properties () : bool {
         $bool = true;
-
         if(!$this->validate_basic_properties($this->SKU, $this->name, $this->price)) $bool = false;
 
-        if(empty($this->size)) $bool = false;
+        if(empty($this->weight)) $bool = false;
 
         return $bool;
     }

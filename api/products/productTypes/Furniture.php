@@ -1,9 +1,9 @@
 <?php
 
 
-namespace api\src\products\productTypes;
+namespace api\products\productTypes;
 
-use api\src\products\model\Product;
+use api\products\model\Product;
 
 class Furniture extends Product
 {

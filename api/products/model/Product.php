@@ -1,7 +1,7 @@
 <?php
 
-namespace api\src\products\model;
-abstract class Product implements ProductInterface
+namespace api\products\model;
+abstract class Product
 {
 
     const TABLE_NAME = "";
