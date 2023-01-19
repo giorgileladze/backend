@@ -16,6 +16,7 @@ class ProductService
     public function check_unic_sku (string $sku) : bool {
         $bool = true;
         $data = $this->get_all_product();
+
         foreach ($data as $productCollection){
             foreach ($productCollection["1"] as $product) {
                 if($product["SKU"] === $sku) $bool = false;

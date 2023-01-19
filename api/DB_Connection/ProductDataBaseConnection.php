@@ -59,8 +59,17 @@ class ProductDataBaseConnection {
         }
     }
 
-    public function check_sku(string $sku) : bool{
-        return true; // to change
+    public function get_all_skus () {
+        $connection = DBConn::get_connection();
+        $sql = "SELECT SKU FROM book, DVD, furniture ";
+
+        try {
+            $stmt = $connection->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new PDOException($e->getMessage());
+        }
     }
 
 }
