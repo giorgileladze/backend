@@ -7,28 +7,11 @@ use Exception;
 use PDO;
 use PDOException;
 
-class DataBaseConn {
-    private string $host = "localhost";
-    private string $DataBase = "scand_product_crud";
-    private string $UserName = "root";
-    private string $UserPasword = "giorgi123";
+class ProductDataBaseConnection {
 
-    private $conn = null;
-
-    public function connect() {
-        $this->conn = null;
-
-        try {
-            $this->conn = new PDO("mysql:host=$this->host;dbname=$this->DataBase", $this->UserName, $this->UserPasword);
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e){
-            throw new Exception('Failed to connect to the database: ' . $e->getMessage());
-        }
-
-        return $this->conn;
-    }
 
     public function insert (Product $product) {
+        $connection = DBConn::get_connection();
         $data = $product->get_properties();
         $table = $product::TABLE_NAME;
 
@@ -38,7 +21,7 @@ class DataBaseConn {
         $sql = "INSERT INTO $table ($columns) VALUES ($values)";
 
         try {
-            $stmt = $this->conn->prepare($sql);
+            $stmt = $connection->prepare($sql);
             $stmt->execute($data);
         } catch (PDOException $e) {
             throw new Exception('Failed to insert to the table: ' . $e->getMessage());
@@ -46,17 +29,19 @@ class DataBaseConn {
     }
 
     public function select (string $table) : array {
+        $connection = DBConn::get_connection();
         $sql = "SELECT * FROM $table ORDER BY SKU";
 
         try {
-            $stmt = $this->conn->prepare($sql);
+            $stmt = $connection->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            return [];
+            throw new PDOException($e->getMessage());
         }
     }
-    public function delete_by_sku (array $array) : string {
+    public function delete_product (array $array) : string {
+        $connection = DBConn::get_connection();
         $items_to_delete = "'" . implode("','", array_values($array)) . "'";
         $sql = "
             DELETE FROM book WHERE SKU IN ($items_to_delete);
@@ -65,7 +50,7 @@ class DataBaseConn {
         ";
 
         try {
-            $stmt = $this->conn->prepare($sql);
+            $stmt = $connection->prepare($sql);
             $stmt->execute();
             return $stmt->rowCount();
         } catch (PDOException $e){
@@ -77,10 +62,5 @@ class DataBaseConn {
     public function check_sku(string $sku) : bool{
         return true; // to change
     }
-
-    public function close_conn () {
-        $this->conn = null;
-    }
-
 
 }

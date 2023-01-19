@@ -32,9 +32,7 @@ class Furniture extends Product
     }
 
     public function validate_product_properties () : bool{
-        $bool = true;
-
-        if(!$this->validate_basic_properties($this->SKU, $this->name, $this->price)) $bool = false;
+        $bool = parent::validate_product_properties();
 
         if(empty($this->width) || empty($this->height) || empty($this->length)) $bool = false;
 

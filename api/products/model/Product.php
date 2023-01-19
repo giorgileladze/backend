@@ -19,15 +19,18 @@ abstract class Product
 
     abstract public function get_properties () : array;
 
-    abstract public function validate_product_properties () : bool;
-
-    public function validate_basic_properties (string $sku, string $name, float $price) : bool {
+    public function validate_product_properties () : bool {
         $bool = true;
 
-        if(empty($sku)) $bool = false;
-        if(empty($name)) $bool = false;
-        if(empty($price) || $price <= 0) $bool = false;
+        if(empty($this->SKU)) $bool = false;
+        if(empty($this->name)) $bool = false;
+        if(empty($this->price) || $this->price <= 0) $bool = false;
 
        return $bool;
+    }
+
+    public function get_sku()
+    {
+        return $this->SKU;
     }
 }

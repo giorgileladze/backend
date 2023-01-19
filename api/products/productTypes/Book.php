@@ -26,8 +26,7 @@ class Book extends Product {
     }
 
     public function validate_product_properties () : bool {
-        $bool = true;
-        if(!$this->validate_basic_properties($this->SKU, $this->name, $this->price)) $bool = false;
+        $bool = parent::validate_product_properties();
 
         if(empty($this->weight)) $bool = false;
 

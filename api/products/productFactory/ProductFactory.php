@@ -10,6 +10,12 @@ use api\products\productTypes\Furniture;
 class ProductFactory {
     private static ?ProductFactory $product_factory_object = null;
 
+    private array $products = [
+        "DVD" => "create_dvd",
+        "Book" => "create_book",
+        "Furniture" => "create_furniture",
+    ];
+
     private function __construct ()
     {
     }
@@ -24,26 +30,23 @@ class ProductFactory {
     public function create_product ($data) : Product {
         $product = null;
 
-//        $type = str_lower($data["productType"]);
-//
-//        $product = $type();
+        $type = $data["productType"];
 
-        if($data["productType"] == "DVD"){
-            $product = new DVD($data["SKU"], $data["name"], $data["price"], $data["size"]);
-        } else if($data["productType"] == "Book"){
-            $product = new Book($data["SKU"], $data["name"], $data["price"], $data["weight"]);
-        } else if($data["productType"] == "Furniture"){
-            $product = new Furniture($data["SKU"], $data["name"], $data["price"], $data["height"], $data["width"], $data["length"]);
-        }
+        $function = $this->products[$type];
 
-//        $product->validate_product_properties();
-//        if(!$this->check_unick_sku($data["SKU"])){
-//            header("HTTP/1.0 400 Bad Request");
-//            echo json_encode(["message" => "400 Bad Request"]);
-//            exit;
-//        }
+        $product = $this->$function($data);
 
         return $product;
+    }
+
+    private function create_furniture (array $data) : Furniture {
+        return new Furniture($data["SKU"], $data["name"], $data["price"], $data["height"], $data["width"], $data["length"]);
+    }
+    private function create_book (array $data ) : Book {
+        return new Book($data["SKU"], $data["name"], $data["price"], $data["weight"]);
+    }
+    private function create_dvd (array $data) : DVD {
+        return new DVD($data["SKU"], $data["name"], $data["price"], $data["size"]);
     }
 
 }
