@@ -61,7 +61,11 @@ class ProductDataBaseConnection {
 
     public function get_all_skus () {
         $connection = DBConn::get_connection();
-        $sql = "SELECT SKU FROM book, DVD, furniture ";
+        $sql = "SELECT SKU FROM DVD
+                UNION ALL
+                SELECT SKU FROM book
+                UNION ALL
+                SELECT SKU FROM furniture";
 
         try {
             $stmt = $connection->prepare($sql);
