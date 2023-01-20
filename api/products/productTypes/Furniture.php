@@ -34,7 +34,9 @@ class Furniture extends Product
     public function validate_product_properties () : bool{
         $bool = parent::validate_product_properties();
 
-        if(empty($this->width) || empty($this->height) || empty($this->length)) $bool = false;
+        if(empty($this->width) || !preg_match("/^[0-9]*$/", $this->width)) $bool = false;
+        if(empty($this->height) || !preg_match("/^[0-9]*$/", $this->height)) $bool = false;
+        if(empty($this->length) || !preg_match("/^[0-9]*$/", $this->length)) $bool = false;
 
         return $bool;
     }

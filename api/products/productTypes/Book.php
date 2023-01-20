@@ -28,7 +28,7 @@ class Book extends Product {
     public function validate_product_properties () : bool {
         $bool = parent::validate_product_properties();
 
-        if(empty($this->weight)) $bool = false;
+        if(empty($this->weight) || !preg_match("/^[0-9]*$/", $this->weight)) $bool = false;
 
         return $bool;
     }

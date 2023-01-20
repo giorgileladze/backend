@@ -22,9 +22,9 @@ abstract class Product
     public function validate_product_properties () : bool {
         $bool = true;
 
-        if(empty($this->SKU)) $bool = false;
-        if(empty($this->name)) $bool = false;
-        if(empty($this->price) || $this->price <= 0) $bool = false;
+        if(empty($this->SKU) || !preg_match("/^[a-zA-Z]*$/", $this->SKU)) $bool = false;
+        if(empty($this->name) || !preg_match("/^[a-zA-Z]*$/", $this->name)) $bool = false;
+        if(empty($this->price) || $this->price <= 0 || !preg_match("/^[0-9]*$/", $this->price)) $bool = false;
 
        return $bool;
     }

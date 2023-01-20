@@ -18,23 +18,18 @@ class DBConn
 
     public static function get_connection () {
         if(self::$conn === null){
-            self::$conn = self::connect();
+            self::connect();
         }
         return self::$conn;
-
     }
 
-    private static function connect() {
-        self::$conn = null;
-
+    private static function connect() : void {
         try {
             self::$conn = new PDO("mysql:host=".self::$host . ";dbname=" . self::$DataBase, self::$UserName, self::$UserPasword);
             self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e){
             throw new Exception('Failed to connect to the database: ' . $e->getMessage());
         }
-
-        return self::$conn;
     }
 
     public static function close_conn () {

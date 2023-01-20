@@ -30,7 +30,7 @@ class DVD extends Product {
     public function validate_product_properties () : bool {
         $bool = parent::validate_product_properties();
 
-        if(empty($this->size)) $bool = false;
+        if(empty($this->size) || !preg_match("/^[0-9]*$/", $this->size)) $bool = false;
 
         return $bool;
     }
