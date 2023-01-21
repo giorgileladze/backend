@@ -8,10 +8,10 @@ use PDOException;
 
 class DBConn
 {
-    private static string $host = "localhost";
-    private static string $DataBase = "scand_product_crud";
-    private static string $UserName = "root";
-    private static string $UserPasword = "giorgi123";
+    private static string $host = "";
+    private static string $DataBase = "";
+    private static string $UserName = "";
+    private static string $UserPasword = "";
 
     private static $conn = null;
 
