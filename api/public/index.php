@@ -4,14 +4,16 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: *");
 header("Access-Control-Allow-Headers: Content-Type");
 
-include_once "autoloader.php";
+require_once __DIR__.'/../vendor/autoload.php';
 
-use api\core\Api;
 use api\core\Request;
+use api\core\Api;
+
+echo "asdh";
 
 $request = Request::get_request_info();
 
-$api = new Api($request);
-$response = $api->hendle();
+$src = new Api($request);
+$response = $src->hendle();
 
-$api->send($response);
+$src->send($response);
