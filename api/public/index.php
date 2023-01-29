@@ -9,8 +9,6 @@ require_once __DIR__.'/../vendor/autoload.php';
 use api\core\Request;
 use api\core\Api;
 
-echo "asdh";
-
 $request = Request::get_request_info();
 
 $src = new Api($request);
