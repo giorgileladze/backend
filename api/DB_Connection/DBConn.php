@@ -8,15 +8,15 @@ use PDOException;
 
 class DBConn
 {
-    private static string $host = "";
-    private static string $DataBase = "";
-    private static string $UserName = "";
-    private static string $UserPasword = "";
+    private static string $host = "mysql";
+    private static string $DataBase = "scand";
+    private static string $UserName = "root";
+    private static string $UserPasword = "password";
 
     private static $conn = null;
 
-
     public static function get_connection () {
+
         if(self::$conn === null){
             self::connect();
         }
