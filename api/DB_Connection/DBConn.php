@@ -8,10 +8,10 @@ use PDOException;
 
 class DBConn
 {
-    private static string $host = "mysql";
-    private static string $DataBase = "scand";
-    private static string $UserName = "root";
-    private static string $UserPasword = "password";
+    private static string $host = "";
+    private static string $DataBase = "";
+    private static string $UserName = "";
+    private static string $UserPasword = "";
 
     private static $conn = null;
 
@@ -24,6 +24,11 @@ class DBConn
     }
 
     private static function connect() : void {
+        self::$host = getenv("MYSQL_HOST");
+        self::$DataBase = getenv("MYSQL_DATABASE");
+        self::$UserName = getenv("MYSQL_USER");
+        self::$UserPasword = getenv("MYSQL_PASSWORD");
+
         try {
             self::$conn = new PDO("mysql:host=".self::$host . ";dbname=" . self::$DataBase, self::$UserName, self::$UserPasword);
             self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

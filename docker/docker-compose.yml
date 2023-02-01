@@ -10,13 +10,13 @@ services:
     working_dir: /var/www/
     volumes:
       - ../api:/var/www
-#    env_file:
-#      - ".env"
-#    environment:
-#      - MYSQL_DATABASE=${MYSQL_DATABASE}
-#      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-#      - MYSQL_USER=${MYSQL_USER}
-#      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    env_file:
+      - ".env"
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
   nginx:
     image: nginx:1.19-alpine
     container_name: nginx
