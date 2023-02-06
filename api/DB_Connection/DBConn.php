@@ -8,14 +8,9 @@ use PDOException;
 
 class DBConn
 {
-    private static string $host = "";
-    private static string $DataBase = "";
-    private static string $UserName = "";
-    private static string $UserPasword = "";
-
     private static $conn = null;
 
-    public static function get_connection () {
+    public static function get_connection () : PDO {
 
         if(self::$conn === null){
             self::connect();
@@ -24,13 +19,13 @@ class DBConn
     }
 
     private static function connect() : void {
-        self::$host = getenv("MYSQL_HOST");
-        self::$DataBase = getenv("MYSQL_DATABASE");
-        self::$UserName = getenv("MYSQL_USER");
-        self::$UserPasword = getenv("MYSQL_PASSWORD");
+        $host = getenv("MYSQL_HOST");
+        $DataBase = getenv("MYSQL_DATABASE");
+        $UserName = getenv("MYSQL_USER");
+        $UserPasword = getenv("MYSQL_PASSWORD");
 
         try {
-            self::$conn = new PDO("mysql:host=".self::$host . ";dbname=" . self::$DataBase, self::$UserName, self::$UserPasword);
+            self::$conn = new PDO("mysql:host=".$host . ";dbname=" . $DataBase, $UserName, $UserPasword);
             self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e){
             throw new Exception('Failed to connect to the database: ' . $e->getMessage());
